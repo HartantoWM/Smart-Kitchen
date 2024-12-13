@@ -18,9 +18,17 @@ if (!fs.existsSync(uploadDir)) {
 
 const init = async () => {
     const server = Hapi.server({
-        port: process.env.PORT || 5000,
-        host: 'localhost',
-    });
+    port: process.env.PORT,
+    host: "0.0.0.0",
+    routes: {
+      cors: {
+        origin: ["*"],
+      },
+      payload: {
+        maxBytes: 1000000, 
+      },
+    },
+  });
 
     // Registrasi plugin Inert (jika dibutuhkan untuk file handling)
     await server.register(Inert);
